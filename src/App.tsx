@@ -33,7 +33,7 @@ function App() {
 		<div className={styles.app}>
 			<div className={styles.boxes}>
 				{fields.map((item, index, list) => {
-					const field = (
+					return (
 						<React.Fragment key={index}>
 							<input
 								type='text'
@@ -48,8 +48,6 @@ function App() {
 							)}
 						</React.Fragment>
 					);
-
-					return field;
 				})}
 			</div>
 			<div className={styles.text}>{fields.map(item => item)}</div>
