@@ -4,24 +4,22 @@ import styles from './app.module.scss';
 function App() {
 	const [fields, setFields] = useState(['a', 'b', 'c']);
 
-	const changeFieldTextHandler = (
-		event: React.ChangeEvent<HTMLInputElement>,
-	) => {
+	const changeFieldText = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const id = +event.target.id;
-		const value = event.target.value;
+		const value = event.nativeEvent.data;
 
 		setFields(prevFields => {
 			const currentFieldIndex = prevFields.findIndex(
 				(item, index) => index === id,
 			);
-			const newValue = value.charAt(value.length - 1);
+			const newValue = value;
 			const newFields = [...prevFields];
 			newFields[currentFieldIndex] = newValue;
 			return newFields;
 		});
 	};
 
-	const addFieldHandler = (index: number) => {
+	const addField = (index: number) => {
 		setFields(prevFields => {
 			const newFields = [...prevFields];
 			newFields.splice(index + 1, 0, '');
@@ -39,10 +37,14 @@ function App() {
 								type='text'
 								value={item}
 								id={`${index}`}
-								onChange={changeFieldTextHandler}
+								onChange={changeFieldText}
 							/>
 							{index !== list.length - 1 ? (
-								<span onClick={addFieldHandler.bind(null, index)}></span>
+								<span
+									onClick={() => {
+										addField(index);
+									}}
+								></span>
 							) : (
 								''
 							)}
